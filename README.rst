@@ -16,7 +16,7 @@ Introduction
 Installation
 ------------
 
-2HybridTools requires Java 1.5. As a portable Java application, it can be installed anywhere on a hard drive, provided that BioJava 1.5 (which is distributed with 2HybridTools) is installed in the system classpath (i.e. the lib folder). Alternatively, BioJava is available at https://biojava.org/.
+2HybridTools requires Java ≥1.5. As a portable Java application, it can be installed anywhere on a hard drive, provided that BioJava ≥1.5 (which is distributed with 2HybridTools) is installed in the system classpath (i.e. the lib folder). Alternatively, BioJava is available at https://biojava.org/.
 
 Internet set-up
 ---------------
