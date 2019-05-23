@@ -32,7 +32,7 @@ java [-Xmx1536m] -jar 2HybridTools.jar [-Djava.library.path <path_to_biojava, de
 
 To load a file, open the File menu and choose "Open" or press Ctrl+O.
 
-A set of sequences is searched for a vector upon loading. Press "Load Vector" to use a DNA or protein tag sequence other than the default one (STHAS). 
+A set of sequences is searched for a vector upon loading. Press "Load Vector" to use a DNA or protein tag sequence other than the default ones (STHAS for 5' and DPAFL for 3'). 
 
 Overlapping of larger N and C terminus sequences is possible by checking the "Overlap" checkbox, and a 3' vector can be loaded in a similar way.
 
