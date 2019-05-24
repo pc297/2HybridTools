@@ -23,8 +23,8 @@ Internet set-up
 
 The built-iun Blast! feature and reference model loading via accession number require an internet connection. If needed, a proxy server can be set for the latter in the "Options/Network Options" drop-down menu.
 
-Quick usage guidelines
-----------------------
+Usage
+-----
 
 2HybridTools can be started by double-clicking the file "2HybridTools.jar" or by entering the following command:
 
