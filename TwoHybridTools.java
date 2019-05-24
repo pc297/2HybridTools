@@ -1,7 +1,7 @@
 /*
  * TwoHybridTools.java
  *
- * Created on 05 February 2005, 20:27
+ * Created on 11 janvier 2007, 14:59
  */
 
 /**
@@ -106,10 +106,11 @@ public class TwoHybridTools extends javax.swing.JFrame
     String proxyPort="";
     String ADString="AD";
     String TERMString="TERM";
-    
+    int mismatches=1;
     //display & comments variables
     public final int COMMENTS_SIZE=11;
     public String description, accession, details;
+    public boolean sortAlphabetical=false;
     
     //Instance variables for date(date might change during program!)
     public Date date;
@@ -130,7 +131,7 @@ public class TwoHybridTools extends javax.swing.JFrame
            
             jComboBox3.setEnabled(false);
             
-            jButton1.setEnabled(false);
+            Go.setEnabled(false);
             jButton2.setEnabled(false);
             jButton3.setEnabled(false);
             jButton4.setEnabled(false);
@@ -143,6 +144,7 @@ public class TwoHybridTools extends javax.swing.JFrame
             jRadioButton5.setEnabled(false);
             jRadioButton6.setEnabled(false);
             jCheckBox1.setEnabled(false);
+            jCheckBox2.setEnabled(false);
             jMenuItem9.setEnabled(false);
             jComboBox1.setEnabled(false);
             jProgressBar1.setVisible(false);
@@ -155,7 +157,7 @@ public class TwoHybridTools extends javax.swing.JFrame
             group.add(jRadioButton6);
             
             
-            jButton1.setMnemonic(KeyEvent.VK_ENTER);
+            Go.setMnemonic(KeyEvent.VK_ENTER);
             //jTextPane1.setContentType("text/html");
             jTextPane1.setEditable(false);
             //jScrollPane1.setViewportView(jTextPane1);
@@ -208,7 +210,7 @@ public class TwoHybridTools extends javax.swing.JFrame
     private void initComponents() {
 
         jOptionPane1 = new javax.swing.JOptionPane();
-        jButton1 = new javax.swing.JButton();
+        Go = new javax.swing.JButton();
         jComboBox3 = new javax.swing.JComboBox();
         jLabel3 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
@@ -246,6 +248,7 @@ public class TwoHybridTools extends javax.swing.JFrame
         };
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextPane1 = new javax.swing.JTextPane();
+        jCheckBox2 = new javax.swing.JCheckBox();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -260,6 +263,7 @@ public class TwoHybridTools extends javax.swing.JFrame
         jMenu5 = new javax.swing.JMenu();
         jMenuItem11 = new javax.swing.JMenuItem();
         jMenuItem12 = new javax.swing.JMenuItem();
+        jMenuItem23 = new javax.swing.JMenuItem();
         jMenu7 = new javax.swing.JMenu();
         jMenuItem21 = new javax.swing.JMenuItem();
         jMenuItem22 = new javax.swing.JMenuItem();
@@ -296,15 +300,15 @@ public class TwoHybridTools extends javax.swing.JFrame
         });
         getContentPane().setLayout(null);
 
-        jButton1.setFont(new java.awt.Font("Microsoft Sans Serif", 0, 12)); // NOI18N
-        jButton1.setText("Translate");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        Go.setFont(new java.awt.Font("Microsoft Sans Serif", 0, 12)); // NOI18N
+        Go.setText("Go");
+        Go.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                GoActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton1);
-        jButton1.setBounds(400, 610, 100, 30);
+        getContentPane().add(Go);
+        Go.setBounds(400, 610, 100, 30);
 
         jComboBox3.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         jComboBox3.setMaximumRowCount(12);
@@ -321,7 +325,7 @@ public class TwoHybridTools extends javax.swing.JFrame
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel3.setText("Reading Frame");
         getContentPane().add(jLabel3);
-        jLabel3.setBounds(560, 560, 100, 23);
+        jLabel3.setBounds(530, 560, 80, 23);
 
         jLabel7.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
@@ -335,7 +339,7 @@ public class TwoHybridTools extends javax.swing.JFrame
         jLabel4.setBounds(310, 270, 280, 20);
 
         jButton2.setFont(new java.awt.Font("Microsoft Sans Serif", 0, 12)); // NOI18N
-        jButton2.setText("Graphics");
+        jButton2.setText("Graph");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
@@ -392,7 +396,7 @@ public class TwoHybridTools extends javax.swing.JFrame
         jPanel1.add(jRadioButton6);
 
         getContentPane().add(jPanel1);
-        jPanel1.setBounds(560, 570, 120, 30);
+        jPanel1.setBounds(510, 570, 113, 30);
 
         jButton3.setFont(new java.awt.Font("Microsoft Sans Serif", 0, 12)); // NOI18N
         jButton3.setText("Summary");
@@ -415,14 +419,14 @@ public class TwoHybridTools extends javax.swing.JFrame
         jButton4.setBounds(180, 610, 100, 30);
 
         jCheckBox1.setFont(new java.awt.Font("MS Reference Sans Serif", 0, 11)); // NOI18N
-        jCheckBox1.setText("Overlap N and C Terms (where available) using");
+        jCheckBox1.setText("Overlap N and C Terms (where available):");
         jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jCheckBox1ActionPerformed(evt);
             }
         });
         getContentPane().add(jCheckBox1);
-        jCheckBox1.setBounds(210, 570, 280, 23);
+        jCheckBox1.setBounds(170, 570, 269, 23);
 
         jComboBox1.setFont(new java.awt.Font("SansSerif", 0, 11)); // NOI18N
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Protein", "DNA" }));
@@ -432,7 +436,7 @@ public class TwoHybridTools extends javax.swing.JFrame
             }
         });
         getContentPane().add(jComboBox1);
-        jComboBox1.setBounds(494, 570, 59, 21);
+        jComboBox1.setBounds(440, 570, 60, 21);
 
         jButton5.setFont(new java.awt.Font("Microsoft Sans Serif", 0, 12)); // NOI18N
         jButton5.setText("Blast results");
@@ -456,6 +460,16 @@ public class TwoHybridTools extends javax.swing.JFrame
 
         getContentPane().add(jScrollPane1);
         jScrollPane1.setBounds(10, 30, 730, 230);
+
+        jCheckBox2.setFont(new java.awt.Font("MS Reference Sans Serif", 0, 11)); // NOI18N
+        jCheckBox2.setText("Sort Blast output");
+        jCheckBox2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBox2ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jCheckBox2);
+        jCheckBox2.setBounds(620, 570, 130, 23);
 
         jMenu1.setText("File");
         jMenu1.setFont(new java.awt.Font("MS Reference Sans Serif", 0, 11)); // NOI18N
@@ -570,6 +584,15 @@ public class TwoHybridTools extends javax.swing.JFrame
             }
         });
         jMenu5.add(jMenuItem12);
+
+        jMenuItem23.setFont(new java.awt.Font("MS Reference Sans Serif", 0, 11)); // NOI18N
+        jMenuItem23.setText("Vector mismatches");
+        jMenuItem23.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem23ActionPerformed(evt);
+            }
+        });
+        jMenu5.add(jMenuItem23);
 
         jMenu4.add(jMenu5);
 
@@ -837,7 +860,7 @@ public class TwoHybridTools extends javax.swing.JFrame
         
         }
         
-        jButton1.setEnabled(true);
+        Go.setEnabled(true);
         jButton2.setEnabled(false);
         jButton3.setEnabled(false);
         jButton4.setEnabled(true);
@@ -845,6 +868,7 @@ public class TwoHybridTools extends javax.swing.JFrame
         jComboBox3.setEnabled(true);
         jComboBox4.setEnabled(true);
         jCheckBox1.setEnabled(true);
+        jCheckBox2.setEnabled(true);
         jButton5.setEnabled(false);
         jRadioButton4.setEnabled(true);
         jRadioButton5.setEnabled(true);
@@ -887,7 +911,7 @@ public class TwoHybridTools extends javax.swing.JFrame
             minProtOverlap=Integer.parseInt(JOptionPane.showInputDialog("Enter Minimum Protein Overlap (default: 5)","5"));
             if(translationDone)
             {
-                jButton1.setEnabled(true);
+                Go.setEnabled(true);
                 jButton2.setEnabled(false);
                 jButton3.setEnabled(false);
                 jButton4.setEnabled(false);
@@ -909,7 +933,7 @@ public class TwoHybridTools extends javax.swing.JFrame
             minDNAOverlap=Integer.parseInt(JOptionPane.showInputDialog("Enter Minimum DNA Overlap (default: 15)","15"));
             if(translationDone)
             {
-                jButton1.setEnabled(true);
+                Go.setEnabled(true);
                 jButton2.setEnabled(false);
                 jButton3.setEnabled(false);
                 jButton4.setEnabled(false);
@@ -1072,6 +1096,10 @@ new InputStreamReader(urlConnection.getInputStream()));
             jTextPane2.setText("No model currently loaded\n");
             
         }
+        if(sortAlphabetical)
+        {
+            transSeqs.sortByDef();
+        }
         this.showSequences();
         jProgressBar1.setVisible(false);
         
@@ -1087,7 +1115,7 @@ new InputStreamReader(urlConnection.getInputStream()));
         {
             matchProtein=false;
         }
-        jButton1.setEnabled(true);
+        Go.setEnabled(true);
         jButton2.setEnabled(false);
         jButton3.setEnabled(false);
         jButton5.setEnabled(false);
@@ -1226,7 +1254,7 @@ new InputStreamReader(urlConnection.getInputStream()));
             ncutoff=Integer.parseInt(JOptionPane.showInputDialog("Enter N Cut-off (default: 2)","2"));
             if(translationDone)
             {
-                jButton1.setEnabled(true);
+                Go.setEnabled(true);
                 jButton2.setEnabled(false);
                 jButton3.setEnabled(false);
                 jButton4.setEnabled(false);
@@ -1251,7 +1279,7 @@ new InputStreamReader(urlConnection.getInputStream()));
         {
             translate=true;
             translationDone=false;
-            jButton1.setEnabled(true);
+            Go.setEnabled(true);
             jButton2.setEnabled(false);
             jButton3.setEnabled(false);
             jButton5.setEnabled(false);
@@ -1273,7 +1301,7 @@ new InputStreamReader(urlConnection.getInputStream()));
             {
                 translate=true;
             translationDone=false;
-            jButton1.setEnabled(true);
+            Go.setEnabled(true);
             jButton2.setEnabled(false);
             jButton3.setEnabled(false);
             jButton5.setEnabled(false);
@@ -1325,7 +1353,7 @@ new InputStreamReader(urlConnection.getInputStream()));
             {
             translate=true;
             translationDone=false;
-            jButton1.setEnabled(true);
+            Go.setEnabled(true);
             jButton2.setEnabled(false);
             jButton3.setEnabled(false);
             jButton5.setEnabled(false);
@@ -1497,7 +1525,7 @@ new InputStreamReader(urlConnection.getInputStream()));
         jButton2.setEnabled(false);
         jButton3.setEnabled(false);
         jButton5.setEnabled(false);
-        jButton1.setEnabled(true);
+        Go.setEnabled(true);
         jMenuItem2.setEnabled(false);
         jMenuItem9.setEnabled(false);
         jProgressBar1.setVisible(false);
@@ -1682,7 +1710,7 @@ new InputStreamReader(urlConnection.getInputStream()));
             jComboBox1.setEnabled(false);
             
         }
-        jButton1.setEnabled(true);
+        Go.setEnabled(true);
         jButton2.setEnabled(false);
         jButton3.setEnabled(false);
         jButton5.setEnabled(false);
@@ -1698,7 +1726,7 @@ new InputStreamReader(urlConnection.getInputStream()));
     private void jRadioButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton6ActionPerformed
         // TODO add your handling code here:
         readFrameNum=3;
-        jButton1.setEnabled(true);
+        Go.setEnabled(true);
         jButton2.setEnabled(false);
         jButton3.setEnabled(false);
         jButton5.setEnabled(false);
@@ -1709,7 +1737,7 @@ new InputStreamReader(urlConnection.getInputStream()));
     private void jRadioButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton5ActionPerformed
         // TODO add your handling code here:
         readFrameNum=2;
-        jButton1.setEnabled(true);
+        Go.setEnabled(true);
         jButton2.setEnabled(false);
         jButton3.setEnabled(false);
         jButton5.setEnabled(false);
@@ -1720,7 +1748,7 @@ new InputStreamReader(urlConnection.getInputStream()));
     private void jRadioButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton4ActionPerformed
         // TODO add your handling code here:
         readFrameNum=1;
-        jButton1.setEnabled(true);
+        Go.setEnabled(true);
         jButton2.setEnabled(false);
         jButton3.setEnabled(false);
         jButton5.setEnabled(false);
@@ -1740,7 +1768,7 @@ new InputStreamReader(urlConnection.getInputStream()));
             reverse=true;
         }
         jMenuItem2.setEnabled(false);
-        jButton1.setEnabled(true);
+        Go.setEnabled(true);
         jButton2.setEnabled(false);
         jButton3.setEnabled(false);
         jButton5.setEnabled(false);
@@ -1777,7 +1805,7 @@ new InputStreamReader(urlConnection.getInputStream()));
         
         
         jMenuItem2.setEnabled(false);
-        jButton1.setEnabled(true);
+        Go.setEnabled(true);
         jButton2.setEnabled(false);
         jButton3.setEnabled(false);
         jButton5.setEnabled(false);
@@ -1792,8 +1820,8 @@ new InputStreamReader(urlConnection.getInputStream()));
     private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
         // TODO add your handling code here:
         HelpFrame myHelp= new HelpFrame();
-        myHelp.setSize(500,400);
-        myHelp.setResizable(false);
+        myHelp.setSize(860,920);
+        myHelp.setResizable(true);
         myHelp.show();
         this.centreFrame(myHelp);
     }//GEN-LAST:event_jMenuItem8ActionPerformed
@@ -1911,7 +1939,7 @@ new InputStreamReader(urlConnection.getInputStream()));
 
     
     
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void GoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GoActionPerformed
        
        if(overlapTerms)
         {
@@ -1923,7 +1951,7 @@ new InputStreamReader(urlConnection.getInputStream()));
         }
         this.update(this.getGraphics());
         this.doTranslation(true);
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_GoActionPerformed
 
     //Changes direction used for translation,chosen with combobox
     //Also dims graphics button (same as above), disables FileSave if changed
@@ -1931,7 +1959,7 @@ new InputStreamReader(urlConnection.getInputStream()));
     //About
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
         // TODO add your handling code here:
-        jOptionPane1.showMessageDialog(this,"         2-Hybrid Tools 1.01\n          By Pierre Cauchy" , "About", JOptionPane.INFORMATION_MESSAGE);
+        jOptionPane1.showMessageDialog(this,"         2-Hybrid Tools 1.03\n          By Pierre Cauchy" , "About", JOptionPane.INFORMATION_MESSAGE);
         
         
     }//GEN-LAST:event_jMenuItem3ActionPerformed
@@ -1971,6 +1999,48 @@ new InputStreamReader(urlConnection.getInputStream()));
             TERMString="AD";
         }
     }//GEN-LAST:event_jMenuItem22ActionPerformed
+
+    private void jCheckBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox2ActionPerformed
+        // TODO add your handling code here:
+        
+        if(jCheckBox2.isSelected())
+        {
+            sortAlphabetical=true;  
+            
+            
+            
+        }
+        
+        if(!jCheckBox2.isSelected())
+        {
+            sortAlphabetical=false;  
+            
+        }
+    }//GEN-LAST:event_jCheckBox2ActionPerformed
+
+    private void jMenuItem23ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem23ActionPerformed
+        // TODO add your handling code here:
+         try
+        {
+            mismatches=Integer.parseInt(JOptionPane.showInputDialog("Enter vector mismatches (default: 1)","1"));
+            if(translationDone)
+            {
+                Go.setEnabled(true);
+                jButton2.setEnabled(false);
+                jButton3.setEnabled(false);
+                jButton4.setEnabled(false);
+                jButton5.setEnabled(false);
+                jMenuItem2.setEnabled(false);
+                jMenuItem9.setEnabled(false);
+            }
+        }
+        catch(NumberFormatException nfe)
+        {
+            
+        }
+                       
+        
+    }//GEN-LAST:event_jMenuItem23ActionPerformed
     
     /**
      * @param args the command line arguments
@@ -2123,7 +2193,7 @@ new InputStreamReader(urlConnection.getInputStream()));
         
         //initialises buttons and fields
         
-        jButton1.setEnabled(true);
+        Go.setEnabled(true);
         jButton2.setEnabled(false);
         jButton3.setEnabled(false);
         jButton4.setEnabled(true);
@@ -2132,6 +2202,7 @@ new InputStreamReader(urlConnection.getInputStream()));
         jComboBox3.setEnabled(true);
         jComboBox4.setEnabled(true);
         jCheckBox1.setEnabled(true);
+        jCheckBox2.setEnabled(true);
         jMenuItem20.setEnabled(true);
         jRadioButton4.setEnabled(true);
         jRadioButton5.setEnabled(true);
@@ -2375,7 +2446,7 @@ new InputStreamReader(urlConnection.getInputStream()));
                                     
                                     
                                     
-                                    Sequence termvectorSeq = new Sequence(seq,!reverse,j,0,seq.length(),strand);
+                                    Sequence termvectorSeq = new Sequence(seq,!reverse,j,0,seq.length(),strand, mismatches);
                                     termvectorSeq.processSequence();
                                     termvectorSeq.getComplementaryStrand();
                                     myTranslator = new Translator(termvectorSeq.getCodonsArray());
@@ -2454,16 +2525,68 @@ new InputStreamReader(urlConnection.getInputStream()));
                         catch (StringIndexOutOfBoundsException sioobe)
                 
                 {
+                                                                    //final int mismatches = 1;
+    final String text = seq;
+    final String pattern = termvector;    
+    int counts=0; 
+    for(int iter = 0; iter < text.length() - pattern.length() + 1; iter++)
+    {
+        int missed = 0;
+        int ator = 0;
+
+        do
+        {
+            if(text.charAt(iter + ator) != pattern.charAt(ator))
+            {
+                missed++;
+            }
+        }while(++ator < pattern.length() && missed <= mismatches);
+
+        if(missed <= mismatches)
+        {
+            System.out.println("Index: " + iter + " Pattern: " + text.substring(iter, iter + pattern.length()));
+            counts++;
+            if(counts==1)
+            {
+                try
+                {
+                    //doc.insertString(doc.getLength(),loadedSeqs.returnDef(i)+"\n",
+                     //            doc.getStyle("regular"));
+                           doc.insertString(doc.getLength(), loadedSeqs.returnSeq(i).substring(0,iter),
+                                 doc.getStyle("red"));
+                           doc.insertString(doc.getLength(), loadedSeqs.returnSeq(i).substring(iter,iter+termvectorStart),
+                                 doc.getStyle("green"));
+                           doc.insertString(doc.getLength(), loadedSeqs.returnSeq(i).substring(iter+termvectorStart,mySequence.getPosN()),
+                                 doc.getStyle("blue"));
+                           doc.insertString(doc.getLength(), loadedSeqs.returnSeq(i).substring(mySequence.getPosN())+"\n",
+                                 doc.getStyle("red"));
+                }
+                 catch (BadLocationException ble) {
+                        System.err.println("Couldn't insert initial text into text pane.");
+                        
+                        
+        }
+                catch (StringIndexOutOfBoundsException sioobe2) {
+                       
                     try
                     {
-                        doc.insertString(doc.getLength(), loadedSeqs.returnSeq(i).substring(0, mySequence.getPosN()),
+                        doc.insertString(doc.getLength(), loadedSeqs.returnSeq(i).substring(0,mySequence.getPosN()),
                                  doc.getStyle("blue"));
-                        doc.insertString(doc.getLength(), loadedSeqs.returnSeq(i).substring(mySequence.getPosN()),
+                           doc.insertString(doc.getLength(), loadedSeqs.returnSeq(i).substring(mySequence.getPosN())+"\n",
                                  doc.getStyle("red"));
                     }
                     catch (BadLocationException ble) {
                         System.err.println("Couldn't insert initial text into text pane.");
         }
+                    
+                    
+                    
+        }
+                
+                
+            }
+        }
+    }
                     
                 }
                         mySequence.getComplementaryStrand();
@@ -2471,7 +2594,8 @@ new InputStreamReader(urlConnection.getInputStream()));
                     }
                 else
                 {
-                    mySequence = new Sequence(seq,reverse,readFrameNum,start,end,strand);
+                    mySequence = new Sequence(seq,reverse,readFrameNum,start,end,strand,mismatches);
+                    mySequence.setNumNs(ncutoff);
                 }
                 
                 if(loadedSeqs.returnDef(i).indexOf(TERMString)==-1)
@@ -2494,7 +2618,7 @@ new InputStreamReader(urlConnection.getInputStream()));
                                     
                                     
                                     
-                                    Sequence vectorSeq = new Sequence(seq,reverse,j,0,seq.length(),strand);
+                                    Sequence vectorSeq = new Sequence(seq,reverse,j,0,seq.length(),strand, mismatches);
                                     vectorSeq.processSequence();
                                     myTranslator = new Translator(vectorSeq.getCodonsArray());
                                     myTranslator.translate(code);
@@ -2509,7 +2633,7 @@ new InputStreamReader(urlConnection.getInputStream()));
                                         //System.out.println("\n\n\nVECTOR START = "+vectorStart);
                                         break;
                                     }
-                
+                                   
         
                                     
                                     
@@ -2569,16 +2693,84 @@ new InputStreamReader(urlConnection.getInputStream()));
                     catch (StringIndexOutOfBoundsException sioobe)
                 
                 {
+                    
+                    // allows 1 mismatch in vector sequence if not found; takes first hit as vector at beginning                
+                                                    //final int mismatches = 1;
+    final String text = seq;
+    final String pattern = vector;    
+    int counts=0; 
+    for(int iter = 0; iter < text.length() - pattern.length() + 1; iter++)
+    {
+        int missed = 0;
+        int ator = 0;
+
+        do
+        {
+            if(text.charAt(iter + ator) != pattern.charAt(ator))
+            {
+                missed++;
+            }
+        }while(++ator < pattern.length() && missed <= mismatches);
+
+        if(missed <= mismatches)
+        {
+            System.out.println("Index: " + iter + " Pattern: " + text.substring(iter, iter + pattern.length()));
+            counts++;
+            if(counts==1)
+            {
+                try
+                {
+                    //doc.insertString(doc.getLength(),loadedSeqs.returnDef(i)+"\n",
+                     //            doc.getStyle("regular"));
+                           doc.insertString(doc.getLength(), loadedSeqs.returnSeq(i).substring(0,iter),
+                                 doc.getStyle("red"));
+                           doc.insertString(doc.getLength(), loadedSeqs.returnSeq(i).substring(iter,iter+vectorStart),
+                                 doc.getStyle("green"));
+                           doc.insertString(doc.getLength(), loadedSeqs.returnSeq(i).substring(iter+vectorStart,mySequence.getPosN()),
+                                 doc.getStyle("blue"));
+                           doc.insertString(doc.getLength(), loadedSeqs.returnSeq(i).substring(mySequence.getPosN())+"\n",
+                                 doc.getStyle("red"));
+                }
+                 catch (BadLocationException ble) {
+                        System.err.println("Couldn't insert initial text into text pane.");
+        }
+                catch (StringIndexOutOfBoundsException sioobe2) {
+                       
                     try
                     {
-                        doc.insertString(doc.getLength(), loadedSeqs.returnSeq(i).substring(0, mySequence.getPosN()),
+                        doc.insertString(doc.getLength(), loadedSeqs.returnSeq(i).substring(0,mySequence.getPosN()),
                                  doc.getStyle("blue"));
-                        doc.insertString(doc.getLength(), loadedSeqs.returnSeq(i).substring(mySequence.getPosN())+"\n\n",
+                           doc.insertString(doc.getLength(), loadedSeqs.returnSeq(i).substring(mySequence.getPosN())+"\n",
                                  doc.getStyle("red"));
                     }
                     catch (BadLocationException ble) {
                         System.err.println("Couldn't insert initial text into text pane.");
         }
+                    
+                    
+                    
+        }
+            }
+            
+        }
+    }
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    //try
+                   // {
+                  //      doc.insertString(doc.getLength(), loadedSeqs.returnSeq(i).substring(0, mySequence.getPosN()),
+                 //                doc.getStyle("blue"));
+                 //       doc.insertString(doc.getLength(), loadedSeqs.returnSeq(i).substring(mySequence.getPosN())+"\n\n",
+                 //                doc.getStyle("red"));
+                 //   }
+                //    catch (BadLocationException ble) {
+                 //       System.err.println("Couldn't insert initial text into text pane.");
+      //  }
                     
                 }
                }
@@ -2968,7 +3160,7 @@ new InputStreamReader(urlConnection.getInputStream()));
                         jTextPane2.setText("Sorry, no sequence could align up to model length");
                         jMenuItem2.setEnabled(false);
                         jMenuItem9.setEnabled(false);
-                        jButton1.setEnabled(true);
+                        Go.setEnabled(true);
                         jTextPane2.setCaretPosition(0);
                     
                     }
@@ -3202,7 +3394,7 @@ tmp2+="</body></html>";;
         jMenuItem2.setEnabled(true);
         jMenuItem9.setEnabled(true);
         isTranslated=true;
-        jButton1.setEnabled(false);
+        Go.setEnabled(false);
         jButton5.setEnabled(true);
         jLabel4.setText("Translated Sequences");
          }
@@ -3220,7 +3412,7 @@ tmp2+="</body></html>";;
         myGUI.setSize(755,700);
         myGUI.show();
         myGUI.centreFrame(myGUI);
-        myGUI.jButton1.setEnabled(false);
+        myGUI.Go.setEnabled(false);
     }
     
     //Centre frame. Frame passes as parameter, and returned centered
@@ -4350,12 +4542,13 @@ tmp2+="</body></html>";;
    
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton Go;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JCheckBox jCheckBox1;
+    private javax.swing.JCheckBox jCheckBox2;
     private javax.swing.JComboBox jComboBox1;
     private javax.swing.JComboBox jComboBox3;
     private javax.swing.JComboBox jComboBox4;
@@ -4387,6 +4580,7 @@ tmp2+="</body></html>";;
     private javax.swing.JMenuItem jMenuItem20;
     private javax.swing.JMenuItem jMenuItem21;
     private javax.swing.JMenuItem jMenuItem22;
+    private javax.swing.JMenuItem jMenuItem23;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;

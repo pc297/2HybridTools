@@ -1,3 +1,7 @@
+
+import java.util.Arrays;
+import java.util.Collections;
+
 /*
  * SeqList.java
  *
@@ -15,6 +19,7 @@
 public class SeqList {
     String[] defs;
     String[] seqs;
+   
     /** Creates a new instance of SeqList */
     public SeqList(String [] d, String[] s) {
         defs=d;
@@ -99,6 +104,46 @@ public class SeqList {
     {
         return defs;
     }
-    
+    public void sortByDef()
+    {
+       String[][] seqlist = new String[defs.length][3];
+       for (int i=0; i< defs.length; i++)
+       {
+           try
+           {    
+           
+           seqlist[i][0]=defs[i].substring(defs[i].indexOf("HIT"), defs[i].length());
+           seqlist[i][1]=seqs[i];
+           seqlist[i][2]=defs[i];
+           }
+           catch (StringIndexOutOfBoundsException sioobe)
+                   {
+                       System.out.println("Error parsing blast hit name");
+                   }
+       }
+       
+       class ColumnComparator implements java.util.Comparator {
+	int columnToSort;
+	ColumnComparator(int columnToSort) {
+		this.columnToSort = columnToSort;
+	}
+	//overriding compare method
+	public int compare(Object o1, Object o2) {
+		String[] row1 = (String[]) o1;
+		String[] row2 = (String[]) o2;
+		//compare the columns to sort
+		return row1[columnToSort].compareTo(row2[columnToSort]);
+	}
+}
+       
+       Arrays.sort(seqlist, new ColumnComparator(0));
+       
+        for (int i=0; i< defs.length; i++)
+        {
+            defs[i]=seqlist[i][2];
+            seqs[i]=seqlist[i][1];
+        }
+       
+    }
     
 }

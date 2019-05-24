@@ -1,7 +1,7 @@
 /*
  * Sequence.java
  *
- * Created on 05 February 2005, 20:16
+ * Created on 11 janvier 2007, 14:59
  */
 
 /**
@@ -26,6 +26,7 @@ public class Sequence
     int vectorstart=14;
     int termvectorstart=28;
     int posN;
+    int mismatches;
     
     
     
@@ -48,6 +49,7 @@ public class Sequence
         end = e;
         seq=seq.toUpperCase();
         
+        
     }
     
     //alt constructor, if no range specified
@@ -59,6 +61,18 @@ public class Sequence
         start=0;
         end=seq.length();
         seq=seq.toUpperCase();
+        
+    }
+    //alt constructor, if mismatches specified
+    public Sequence(String s, boolean b, int i, int a, int e, int c, int m)
+    {
+        seq=s;
+        reverse=b;
+        readingFrame=i;
+        start = a;
+        end = e;
+        seq=seq.toUpperCase();
+        mismatches=1;
         
     }
     
@@ -110,14 +124,60 @@ public class Sequence
             }
             try
             {
+            //added 09.05.19   
+            if(seq.toUpperCase().indexOf(vector)==-1)
+            {
+                throw new StringIndexOutOfBoundsException();
+            }
                 
+                
+                seq=seq.substring(seq.toUpperCase().indexOf(vector)+vectorstart, posN);
             
-            seq=seq.substring(seq.toUpperCase().indexOf(vector)+vectorstart, posN);
             
             }
             catch(StringIndexOutOfBoundsException sioobe)
             {
-                seq=seq.substring(0,posN).toUpperCase();
+// allows 1 mismatch in vector sequence if not found; takes first hit as vector at beginning                
+                                                    //final int mismatches = 1;
+    final String text = seq;
+    final String pattern = vector;    
+    int counts=0; 
+    for(int iter = 0; iter < text.length() - pattern.length() + 1; iter++)
+    {
+        int missed = 0;
+        int ator = 0;
+
+        do
+        {
+            if(text.charAt(iter + ator) != pattern.charAt(ator))
+            {
+                missed++;
+            }
+        }while(++ator < pattern.length() && missed <= mismatches);
+
+        if(missed <= mismatches)
+        {
+            System.out.println("Index: " + iter + " Pattern: " + text.substring(iter, iter + pattern.length()));
+            counts++;
+            if(counts==1)
+            {
+                try
+                {
+                seq=seq.substring(iter+vectorstart, posN);
+                }
+                catch(StringIndexOutOfBoundsException sioobe3)
+                {
+                    seq=seq.substring(0,seq.length()).toUpperCase();
+                }
+            }
+        }
+        //else
+        //{
+        //    seq=seq.substring(0,posN).toUpperCase();
+        //}
+    }
+                
+                
             }
             
         }
@@ -158,11 +218,57 @@ public class Sequence
             }
             try
             {
+                //added 09.05.19   
+            if(seq.toUpperCase().indexOf(termvector)==-1)
+            {
+                throw new StringIndexOutOfBoundsException();
+            }
+
                 seq=seq.substring(seq.toUpperCase().indexOf(termvector)+termvectorstart, posN);
             }
             catch(StringIndexOutOfBoundsException sioobe)
             {
-                seq=seq.substring(0,posN).toUpperCase();
+// allows 1 mismatch in vector sequence if not found; takes first hit as vector at beginning                
+                                                    //final int mismatches = 1;
+    final String text = seq;
+    final String pattern = termvector;    
+    int counts=0; 
+    for(int iter = 0; iter < text.length() - pattern.length() + 1; iter++)
+    {
+        int missed = 0;
+        int ator = 0;
+
+        do
+        {
+            if(text.charAt(iter + ator) != pattern.charAt(ator))
+            {
+                missed++;
+            }
+        }while(++ator < pattern.length() && missed <= mismatches);
+
+        if(missed <= mismatches)
+        {
+            System.out.println("Index: " + iter + " Pattern: " + text.substring(iter, iter + pattern.length()));
+            counts++;
+            if(counts==1)
+            {
+                try
+                {
+                seq=seq.substring(iter+termvectorstart, posN);
+                }
+                catch(StringIndexOutOfBoundsException sioobe3)
+                {
+                    seq=seq.substring(0,seq.length()).toUpperCase();
+                }
+            }
+        }
+        //else
+        //{
+        //    seq=seq.substring(0,posN).toUpperCase();
+        //}
+    }
+                
+                
             }
             
             
